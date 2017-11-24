@@ -1,7 +1,8 @@
 'use strict';
-var getMaxElement = {
 
-}
+// var getMaxElement = function () {
+
+// }
 
 window.renderStatistics = function (ctx, names, times) {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
@@ -38,16 +39,18 @@ window.renderStatistics = function (ctx, names, times) {
   var initialY = 250;
 
   for (var i = 0; i < times.length; i++) {
+    var n = -1 * (times[i] * step);
+    var rand = 1 + Math.floor(Math.random() * 10);
+    var alpha = 0.1 * rand;
 
-    ctx.fillStyle = 'rgba(0, 0, 255, 1)';
-    ctx.globalAlpha = 1 - 0.1 * (i + 1) ;
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = 'rgb(0, 0, 255)';
 
     if (names[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+      ctx.fillStyle = 'rgb(255, 0, 0)';
       ctx.globalAlpha = 1;
     }
-    var n = -1 * (times[i] * step);
-    console.log(n);
+
     ctx.fillRect(initialX + (barWidth + indent) * i, initialY, barWidth, -1 * (times[i] * step));
     ctx.fillStyle = '#000';
     ctx.globalAlpha = 1;
