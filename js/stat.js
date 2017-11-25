@@ -55,8 +55,6 @@ window.renderStatistics = function (ctx, names, times) {
   var initialY = 255;
   var initialYNames = initialY + 15;
 
-
-
   for (var i = 0; i < times.length; i++) {
     var n = -1 * (times[i] * step);
     var rand = 1 + Math.floor(Math.random() * 10);
