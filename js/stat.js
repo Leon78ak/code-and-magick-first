@@ -1,6 +1,6 @@
 'use strict';
 
-function getMaxElement (arr) {
+function getMaxElement(arr) {
   var max = -1;
   var maxIndex = -1;
 
@@ -32,9 +32,10 @@ window.renderStatistics = function (ctx, names, times) {
   var histogramHeigth = 150;
   var step = histogramHeigth / (max - 0);
 
-   // сортировка по возрастанию
+  // сортировка по возрастанию
 
-  for (var i = 0; i <= times.length - 2; i++) {
+  for (i = 0; i <= times.length - 2; i++) {
+
     var minValue = times[i];
 
     for (var j = i + 1; j <= times.length - 1; j++) {
@@ -49,16 +50,14 @@ window.renderStatistics = function (ctx, names, times) {
 
   ctx.fillText('Худшее время: ' + Math.floor(max) + 'мс у игрока ' + names[maxIndex], 120, 80);
 
-  var barWidth = 40; /*ширина колонки*/
-  var indent = 50; /*расстояние между колонками*/
+  var barWidth = 40; /* ширина колонки */
+  var indent = 50; /* расстояние между колонками */
   var initialX = 120;
   var initialY = 255;
   var initialYNames = initialY + 15;
 
   for (var i = 0; i < times.length; i++) {
-    var n = -1 * (times[i] * step);
-    var rand = 1 + Math.floor(Math.random() * 10);
-    var alpha = 0.1 * rand;
+    var alpha = (Math.random().toFixed(1));
     var initialXNewColumn = initialX + (barWidth + indent) * i;
     var barHeight = -1 * (times[i] * step);
     var initialYTimes = initialY - 5 + barHeight;
