@@ -32,22 +32,6 @@ window.renderStatistics = function (ctx, names, times) {
   var histogramHeigth = 150;
   var step = histogramHeigth / (max - 0);
 
-  // сортировка по возрастанию
-
-  for (i = 0; i <= times.length - 2; i++) {
-
-    var minValue = times[i];
-
-    for (var j = i + 1; j <= times.length - 1; j++) {
-      if (times[j] < minValue) {
-        minValue = times[j];
-        var swap = times[i];
-        times[i] = minValue;
-        times[j] = swap;
-      }
-    }
-  }
-
   ctx.fillText('Худшее время: ' + Math.floor(max) + 'мс у игрока ' + names[maxIndex], 120, 80);
 
   var barWidth = 40; /* ширина колонки */
