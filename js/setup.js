@@ -11,19 +11,37 @@ var WIZARD_NAMES = [
   'Вашингтон'
 ];
 
-var WIZARD_SURNAMES = ['да Марья',
+var WIZARD_SURNAMES = [
+  'да Марья',
   'Верон',
   'Мирабелла',
   'Вальц',
   'Онопко',
- 'Топольницкая',
- 'Нионго',
- 'Ирвинг'
+  'Топольницкая',
+  'Нионго',
+  'Ирвинг'
 ];
 
-var WIZARD_COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)',
-'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var WIZARD_EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARD_FULLNAMES = [];
+
+var WIZARD_COAT_COLOR = [
+  'rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(146, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)'
+];
+
+var WIZARD_EYES_COLOR = [
+  'black',
+  'red',
+  'blue',
+  'yellow',
+  'green'
+];
+
+var wizards = [];
 
 var userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
@@ -32,29 +50,46 @@ document.querySelector('.setup-similar').classList.remove('hidden');
 
 var generateValue = function(array) {
   var randValue = array[Math.floor(Math.random() * array.length)];
-  randValue = array[array.length - 1];
-  array.length--;
+  array.splice(array.indexOf(randValue), 1);
   return randValue;
 }
 
-var wizard = {
-  name: generateValue(WIZARD_NAMES),
-  surname: generateValue(WIZARD_SURNAMES),
-  coatColor: generateValue(WIZARD_COAT_COLOR),
-  eyesColor: generateValue(WIZARD_EYES_COLOR)
-};
-
-var wizards = [];
+for (var i = 0; i < WIZARD_NAMES.length; i++) {
+  // /итерация по длине массива? или фикс?
+  var name = generateValue(WIZARD_NAMES);
+  var surname = generateValue(WIZARD_SURNAMES);
+  var fullName = name + ' ' + surname;
+  WIZARD_FULLNAMES.push(fullName);
+  // почему 4 значения на выходе?
+}
 
 for (var i = 0; i < 4; i++) {
   wizards[i] = {
-    name: generateValue(WIZARD_NAMES),
-    surname: generateValue(WIZARD_SURNAMES),
+    name: generateValue(WIZARD_FULLNAMES),
     coatColor: generateValue(WIZARD_COAT_COLOR),
-    eyesColor: generateValue(WIZARD_EYES_COLOR)
+    eyesColor: generateValue(WIZARD_EYES_COLOR),
   };
 }
 
-console.log(wizards);
+var similarListElement = document.querySelector('.setup-similar-list');
 
-console.log(wizards[1]);
+var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+
+var renderWizard = function (wizard) {
+  var wizardElement = similarWizardTemplate.cloneNode(true);
+
+  wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
+  wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = wizards[i].eyesColor;
+
+  return wizardElement;
+}
+
+var fragment = document.createDocumentFragment();
+for (var i = 0; i < wizards.length; i++) {
+  fragment.appendChild(renderWizard(wizards[i]));
+}
+similarListElement.appendChild(fragment);
+
+userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
