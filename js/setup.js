@@ -93,3 +93,41 @@ similarListElement.appendChild(fragment);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = document.querySelector('.setup-close');
+var inputName = setup.querySelector('.setup-user-name');
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27 && inputName !== document.activeElement) {
+      closePopup();
+    }
+  })
+});
+
+setupClose.addEventListener('click', function (evt) {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    closePopup();
+  }
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    openPopup();
+  }
+});
