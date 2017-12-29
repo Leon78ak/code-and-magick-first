@@ -24,7 +24,7 @@ var WIZARD_SURNAMES = [
 
 var WIZARD_FULLNAMES = [];
 
-var WIZARD_COAT_COLOR = [
+var WIZARD_COAT_COLORS = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
   'rgb(146, 100, 161)',
@@ -33,12 +33,20 @@ var WIZARD_COAT_COLOR = [
   'rgb(0, 0, 0)'
 ];
 
-var WIZARD_EYES_COLOR = [
+var WIZARD_EYES_COLORS = [
   'black',
   'red',
   'blue',
   'yellow',
   'green'
+];
+
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
 ];
 
 var wizards = [];
@@ -48,26 +56,21 @@ userDialog.classList.remove('hidden');
 
 document.querySelector('.setup-similar').classList.remove('hidden');
 
-var generateValue = function(array) {
-  var randValue = array[Math.floor(Math.random() * array.length)];
-  array.splice(array.indexOf(randValue), 1);
-  return randValue;
-}
+var generateRandomELement = function(array) {
+  var randomElementIndex = Math.floor(Math.random() * array.length);
+  return array[randomElementIndex];
+};
 
-for (var i = 0; i < WIZARD_NAMES.length; i++) {
-  // /итерация по длине массива? или фикс?
-  var name = generateValue(WIZARD_NAMES);
-  var surname = generateValue(WIZARD_SURNAMES);
-  var fullName = name + ' ' + surname;
-  WIZARD_FULLNAMES.push(fullName);
-  // почему 4 значения на выходе?
-}
+var getUniqueELement = function(array) {
+  var randomElementIndex = Math.floor(Math.random() * array.length);
+  return array.splice(randomElementIndex, 1);
+};
 
 for (var i = 0; i < 4; i++) {
   wizards[i] = {
-    name: generateValue(WIZARD_FULLNAMES),
-    coatColor: generateValue(WIZARD_COAT_COLOR),
-    eyesColor: generateValue(WIZARD_EYES_COLOR),
+    name: getUniqueELement(WIZARD_NAMES) + getUniqueELement(WIZARD_SURNAMES),
+    coatColor: generateRandomELement(WIZARD_COAT_COLORS),
+    eyesColor: generateRandomELement(WIZARD_EYES_COLORS),
   };
 }
 
@@ -77,10 +80,10 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template').c
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
-
+  debugger;
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-  wizardElement.querySelector('.wizard-eyes').style.fill = wizards[i].eyesColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
 
   return wizardElement;
 }
@@ -97,6 +100,9 @@ var setup = document.querySelector('.setup');
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = document.querySelector('.setup-close');
 var inputName = setup.querySelector('.setup-user-name');
+var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
+var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
+var fireballWrap = setup.querySelector('.setup-fireball-wrap');
 
 var openPopup = function () {
   setup.classList.remove('hidden');
@@ -131,3 +137,24 @@ setupOpen.addEventListener('keydown', function (evt) {
     openPopup();
   }
 });
+
+// Цвет мантии .setup-wizard .wizard-coat должен обновляться по нажатию на нее.
+//  Цвет мантии задается через изменение инлайнового CSS-свойства fill для элемента.
+// Цвет должен сменяться произвольным образом на один из следующих цветов:
+
+var changeCoatColor = function () {
+  this.style.fill = generateRandomELement(WIZARD_COAT_COLORS);
+};
+
+var changeEyesColor = function () {
+  this.style.fill = generateRandomELement(WIZARD_EYES_COLORS);
+};
+
+var changeFireballColor = function () {
+  this.style.backgroundColor = generateRandomELement(FIREBALL_COLORS);
+};
+
+wizardCoat.addEventListener('click', changeCoatColor);
+wizardEyes.addEventListener('click', changeEyesColor);
+fireballWrap.addEventListener('click', changeFireballColor);
+
