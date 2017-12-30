@@ -51,26 +51,13 @@ var FIREBALL_COLORS = [
 
 var wizards = [];
 
-var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
-
 document.querySelector('.setup-similar').classList.remove('hidden');
-
-var generateRandomELement = function(array) {
-  var randomElementIndex = Math.floor(Math.random() * array.length);
-  return array[randomElementIndex];
-};
-
-var getUniqueELement = function(array) {
-  var randomElementIndex = Math.floor(Math.random() * array.length);
-  return array.splice(randomElementIndex, 1);
-};
 
 for (var i = 0; i < 4; i++) {
   wizards[i] = {
-    name: getUniqueELement(WIZARD_NAMES) + getUniqueELement(WIZARD_SURNAMES),
-    coatColor: generateRandomELement(WIZARD_COAT_COLORS),
-    eyesColor: generateRandomELement(WIZARD_EYES_COLORS),
+    name: window.util.getUniqueELement(WIZARD_NAMES) + window.util.getUniqueELement(WIZARD_SURNAMES),
+    coatColor: window.util.generateRandomELement(WIZARD_COAT_COLORS),
+    eyesColor: window.util.generateRandomELement(WIZARD_EYES_COLORS),
   };
 }
 
@@ -94,6 +81,9 @@ for (var i = 0; i < wizards.length; i++) {
 }
 similarListElement.appendChild(fragment);
 
+var userDialog = document.querySelector('.setup');
+userDialog.classList.remove('hidden');
+
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
 var setup = document.querySelector('.setup');
@@ -103,6 +93,9 @@ var inputName = setup.querySelector('.setup-user-name');
 var wizardCoat = setup.querySelector('.setup-wizard .wizard-coat');
 var wizardEyes = setup.querySelector('.setup-wizard .wizard-eyes');
 var fireballWrap = setup.querySelector('.setup-fireball-wrap');
+
+
+
 
 var openPopup = function () {
   setup.classList.remove('hidden');
@@ -143,15 +136,15 @@ setupOpen.addEventListener('keydown', function (evt) {
 // Цвет должен сменяться произвольным образом на один из следующих цветов:
 
 var changeCoatColor = function () {
-  this.style.fill = generateRandomELement(WIZARD_COAT_COLORS);
+  this.style.fill = window.util.generateRandomELement(WIZARD_COAT_COLORS);
 };
 
 var changeEyesColor = function () {
-  this.style.fill = generateRandomELement(WIZARD_EYES_COLORS);
+  this.style.fill = window.util.generateRandomELement(WIZARD_EYES_COLORS);
 };
 
 var changeFireballColor = function () {
-  this.style.backgroundColor = generateRandomELement(FIREBALL_COLORS);
+  this.style.backgroundColor = window.util.generateRandomELement(FIREBALL_COLORS);
 };
 
 wizardCoat.addEventListener('click', changeCoatColor);
