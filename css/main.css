@@ -657,6 +657,8 @@ input[type=radio]:checked + .review-mark-label {
 
   width: 716px;
   height: 65px;
+
+  cursor: move;
 }
 
 .setup-player {
@@ -705,6 +707,11 @@ input[type=radio]:checked + .review-mark-label {
 
   width: 260px;
   height: 260px;
+}
+
+.setup-artifacts .over {
+  background-color: #fff000;
+  outline: 2px dashed red;
 }
 
 .setup-artifacts-cell {
