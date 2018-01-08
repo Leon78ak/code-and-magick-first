@@ -198,10 +198,6 @@ var handleDragLeave = function (evt) {
 };
 
 var handleDrop = function (evt) {
-  // if (draggedItem != this) {
-  //     draggedItem.innerHTML = this.innerHTML;
-  //     this.innerHTML = evt.dataTransfer.getData('text/html');
-  // }
   evt.target.classList.remove('over');
   evt.target.appendChild(draggedItem);
   evt.preventDefault();
