@@ -26,5 +26,4 @@
       return array.splice(randomElementIndex, 1);
     }
   };
-
 })();

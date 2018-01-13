@@ -1,7 +1,7 @@
 // dialog.js
 'use strict';
 
-// (function () {
+(function () {
   var userDialog = document.querySelector('.setup');
   var userDialogOpen = document.querySelector('.setup-open');
   var userDialogClose = document.querySelector('.setup-close');
@@ -12,9 +12,9 @@
 
   userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
-  var resetPosition = function (element) {
-    element.style.left = '';
-    element.style.top = '';
+  var resetPosition = function (elem) {
+    elem.style.left = '';
+    elem.style.top = '';
   };
 
   var openPopup = function () {
@@ -69,42 +69,30 @@
     };
   };
 
-  // Цвет мантии .setup-wizard .wizard-coat должен обновляться по нажатию на нее.
-  //  Цвет мантии задается через изменение инлайнового CSS-свойства fill для элемента.
-  // Цвет должен сменяться произвольным образом на один из следующих цветов:
-
-  var changeCoatColor = function () {
-    this.style.fill = window.util.generateRandomELement(window.constants.WIZARD_COAT_COLORS);
+// функция смены цвета элемента волшебника
+  window.colorize = function (elem, color) {
+    elem.addEventListener('click', function () {
+      var elementColor = window.util.generateRandomELement(color);
+      this.style.backgroundColor = elementColor;
+      this.style.fill = elementColor;
+    });
   };
 
-  var changeEyesColor = function () {
-    this.style.fill = window.util.generateRandomELement(window.constants.WIZARD_EYES_COLORS);
-  };
+  window.colorize(wizardCoat, window.constants.WIZARD_COAT_COLORS);
+  window.colorize(wizardEyes, window.constants.WIZARD_EYES_COLORS);
+  window.colorize(fireballWrap, window.constants.FIREBALL_COLORS);
 
-  var changeFireballColor = function () {
-    this.style.backgroundColor = window.util.generateRandomELement(window.constants.FIREBALL_COLORS);
-  };
 
-  // var changeWizardPartColor = function (wizardPart, color, propery) {
-  //   var changeColor = function () {
-  //     this.style.fill = window.util.generateRandomELement(color);
-  //   };
 
-  //   wizardPart.addEventListener('click', changeColor);
-  // };
 
-  // changeWizardPartColor(wizardEyes, window.constants.WIZARD_EYES_COLORS, 'fill');
 
-  wizardCoat.addEventListener('click', changeCoatColor);
-  wizardEyes.addEventListener('click', changeEyesColor);
-  fireballWrap.addEventListener('click', changeFireballColor);
+
+
 
   var dialogHandle = userDialog.querySelector('.setup-user-pic');
 
   dialogHandle.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-
-
 
     var startCoords = {
       x: evt.clientX,
@@ -145,11 +133,8 @@
         newX = document.documentElement.clientWidth  - userDialog.offsetWidth;
       }
 
-
       userDialog.style.top = newY + 'px';
       userDialog.style.left = newX + 'px';
-      console.log(userDialog.style.left);
-      console.log(getCoords(userDialog).left);
     };
 
     var onMouseUp = function (upEvt) {
@@ -163,14 +148,8 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-// })();
-
-// Предметы, лежащие внутри блоков .setup-artifacts-cell и .setup-artifacts-shop,
-//  должны быть помечены как «передвигаемые» (draggable="true")
-
-
-
 var shopElement = document.querySelector('.setup-artifacts-shop');
+var artifactsElement = document.querySelector('.setup-artifacts');
 var draggedItem = null;
 
 var handleDragStart = function (evt) {
@@ -179,8 +158,6 @@ var handleDragStart = function (evt) {
     evt.dataTransfer.setData('text/plain', evt.target.alt);
   }
 };
-
-var artifactsElement = document.querySelector('.setup-artifacts');
 
 var handleDragOver = function (evt) {
   evt.preventDefault();
@@ -209,17 +186,7 @@ artifactsElement.addEventListener('dragover', handleDragOver);
 artifactsElement.addEventListener('dragleave', handleDragLeave);
 artifactsElement.addEventListener('drop', handleDrop);
 
+})();
 
-
-
-
-
-
-// Зона в которую можно перетаскивать элемент должна получать красную рамку outline: 2px dashed red;
-//  во время начала движении и убираться при окончании
-// При передвижении элемента зона .setup-artifacts-cell над которой сейчас находится элемент
-//  должна подсвечиваться жёлтым (yellow)
-// При отпускании элемента в правильном месте, элемент должен оказываться на новой позиции,
-//  в противном случае все элементы оказываются на своих исходных местах
 // Дополнительно: Реализовать механизм не перетаскивания исходного элемента, а копирования.
 // При этом нужно запретить перетаскивать два элемента в одно и то же место

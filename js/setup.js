@@ -2,21 +2,18 @@
 
 (function () {
 
-
   var wizards = [];
 
   document.querySelector('.setup-similar').classList.remove('hidden');
-
   for (var i = 0; i < 4; i++) {
     wizards[i] = {
-      name: window.util.getUniqueELement(window.constants.WIZARD_NAMES) + window.util.getUniqueELement(window.constants.WIZARD_SURNAMES),
+      name: (window.util.getUniqueELement(window.constants.WIZARD_NAMES) + ' ' + window.util.getUniqueELement(window.constants.WIZARD_SURNAMES)),
       coatColor: window.util.generateRandomELement(window.constants.WIZARD_COAT_COLORS),
       eyesColor: window.util.generateRandomELement(window.constants.WIZARD_EYES_COLORS),
     };
   }
 
   var similarListElement = document.querySelector('.setup-similar-list');
-
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
   var renderWizard = function (wizard) {
